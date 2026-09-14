@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JANE'S LIVE LAB • 커뮤니티</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        body { font-family: 'Pretendard', sans-serif; background-color: #F8F9FA; }
+        .navy-theme { background-color: #1D3557; }
+        .teal-accent { color: #2A9D8F; }
+        .teal-bg { background-color: #2A9D8F; }
+        .teal-bg:hover { background-color: #218377; }
+        .scrollbar-none::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="text-gray-800 antialiased flex flex-col min-h-screen">
+
+    <!-- 상단 라이브 헤더 -->
+    <header class="bg-[#007A78] text-white pt-8 pb-6 px-4 sm:px-8 shadow-md">
+        <div class="max-w-6xl mx-auto">
+            
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                <div>
+                    <span class="text-xs bg-yellow-400 text-gray-900 font-bold px-3 py-1 rounded-full uppercase tracking-wider">Community</span>
+                    <h1 class="text-2xl sm:text-3xl font-black mt-2 tracking-tight">JANE'S LIVE LAB • 커뮤니티</h1>
+                    <p class="text-xs sm:text-sm text-teal-100 mt-1">질문 답변, AI 실습 후기, 수업 공지사항을 공유하는 자유 게시판입니다.</p>
+                </div>
+                <button onclick="openWriteModal()" class="bg-white text-[#007A78] hover:bg-gray-100 font-bold text-xs py-2.5 px-4 rounded-xl shadow transition flex items-center gap-1.5 shrink-0">
+                    <span>✏️</span>
+                    <span>새 글 쓰기</span>
+                </button>
+            </div>
+
+            <!-- 네비게이션 탭 -->
+            <div class="flex items-center gap-2 sm:gap-4 overflow-x-auto pb-2 scrollbar-none text-xs sm:text-sm font-bold">
+                <a href="index.html" class="hover:bg-white/10 px-3 py-2.5 rounded-xl transition flex items-center gap-1.5 whitespace-nowrap text-white">
+                    <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    <span>구글애즈 공식(강의노트)</span>
+                </a>
+                <a href="index.html#curriculum-section" class="hover:bg-white/10 px-3 py-2.5 rounded-xl transition flex items-center gap-1.5 whitespace-nowrap text-white">
+                    <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span>강릉 커리큘럼</span>
+                </a>
+                <button onclick="openAdsModal()" class="hover:bg-white/10 px-3 py-2.5 rounded-xl transition flex items-center gap-1.5 whitespace-nowrap text-white">
+                    <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span>광고 시연(실습)</span>
+                </button>
+                <a href="https://padlet.com/janeaicinklab/jane-s-ads-live-lab-ihcvzhdqld5snx8s" target="_blank" class="hover:bg-white/10 px-3 py-2.5 rounded-xl transition flex items-center gap-1.5 whitespace-nowrap text-white">
+                    <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                    <span>패들렛</span>
+                </a>
+                <a href="janessam-board.html" class="bg-white text-[#007A78] px-4 py-2.5 rounded-xl border-2 border-black shadow-sm flex items-center gap-1.5 whitespace-nowrap">
+                    <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                    <span>게시판</span>
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- 게시판 메인 컨테이너 -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full">
+        
+        <!-- 검색 및 카테고리 필터 -->
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex gap-2 text-xs font-bold w-full md:w-auto overflow-x-auto">
+                <button onclick="filterCategory('전체')" class="category-btn bg-[#1D3557] text-white px-3.5 py-2 rounded-lg transition whitespace-nowrap">전체</button>
+                <button onclick="filterCategory('공지')" class="category-btn bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-lg transition whitespace-nowrap">📢 공지</button>
+                <button onclick="filterCategory('질문')" class="category-btn bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-lg transition whitespace-nowrap">❓ 질문/피드백</button>
+                <button onclick="filterCategory('후기')" class="category-btn bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-2 rounded-lg transition whitespace-nowrap">🎉 실습 인증</button>
+            </div>
+            <div class="relative w-full md:w-64">
+                <input type="text" id="searchInput" onkeyup="searchPosts()" placeholder="글 제목 또는 작성자 검색..." class="w-full text-xs p-2.5 pl-8 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-[#2A9D8F]">
+                <span class="absolute left-2.5 top-2.5 text-gray-400 text-xs">🔍</span>
+            </div>
+        </div>
+
+        <!-- 게시글 테이블 목록 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <table class="w-full text-left border-collapse text-xs md:text-sm min-w-[600px]">
+                <thead>
+                    <tr class="bg-gray-100 text-gray-600 border-b border-gray-200 font-bold">
+                        <th class="p-3.5 w-16 text-center">번호</th>
+                        <th class="p-3.5 w-24 text-center">분류</th>
+                        <th class="p-3.5">제목</th>
+                        <th class="p-3.5 w-28 text-center">작성자</th>
+                        <th class="p-3.5 w-24 text-center">작성일</th>
+                    </tr>
+                </thead>
+                <tbody id="postTableBody" class="divide-y divide-gray-100">
+                    <!-- 기본 공지사항 1 -->
+                    <tr class="hover:bg-teal-50/40 transition bg-amber-50/30">
+                        <td class="p-3.5 text-center font-bold text-amber-600">공지</td>
+                        <td class="p-3.5 text-center"><span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded">필독</span></td>
+                        <td class="p-3.5 font-bold text-[#1D3557] cursor-pointer hover:underline" onclick="viewPost(0)">
+                            [강릉 15기] 구글 애즈 실습 전 준비사항 및 과금 차단 가이드
+                        </td>
+                        <td class="p-3.5 text-center font-semibold text-gray-700">제인쌤 👑</td>
+                        <td class="p-3.5 text-center text-gray-400 text-xs">2026.11.01</td>
+                    </tr>
+                    <!-- 샘플 게시글 2 -->
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="p-3.5 text-center text-gray-400">2</td>
+                        <td class="p-3.5 text-center"><span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded">질문</span></td>
+                        <td class="p-3.5 font-medium text-gray-800 cursor-pointer hover:underline" onclick="viewPost(1)">
+                            제미나이로 작성한 다이어리 광고 문구 피드백 부탁드립니다!
+                        </td>
+                        <td class="p-3.5 text-center text-gray-600">딸기네문구</td>
+                        <td class="p-3.5 text-center text-gray-400 text-xs">2026.11.03</td>
+                    </tr>
+                    <!-- 샘플 게시글 3 -->
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="p-3.5 text-center text-gray-400">1</td>
+                        <td class="p-3.5 text-center"><span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded">후기</span></td>
+                        <td class="p-3.5 font-medium text-gray-800 cursor-pointer hover:underline" onclick="viewPost(2)">
+                            ddalgishop.com 주소로 웹 랜딩페이지 연결 완료했습니다!
+                        </td>
+                        <td class="p-3.5 text-center text-gray-600">강릉대표사장</td>
+                        <td class="p-3.5 text-center text-gray-400 text-xs">2026.11.02</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- 구글 애즈 실습 모달 -->
+    <div id="adsSimulatorModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-3 md:p-6">
+        <div class="bg-white rounded-2xl max-w-5xl w-full max-h-[92vh] overflow-hidden flex flex-col shadow-2xl border border-gray-200">
+            <div class="bg-[#4285F4] text-white px-6 py-3.5 flex justify-between items-center shadow-md">
+                <div class="flex items-center space-x-3">
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    <div>
+                        <div class="text-[11px] opacity-90 font-medium">Google Ads • 첫 번째 캠페인 만들기</div>
+                        <h3 class="text-base font-bold leading-none">실전 광고 소재 구성 &amp; 안전 시연</h3>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="bg-white/20 text-white text-xs px-2.5 py-1 rounded-full font-bold">초안 자동 저장 중</span>
+                    <button onclick="closeAdsModal()" class="text-white hover:bg-white/20 rounded-lg p-1 text-lg font-bold transition">✕</button>
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-4 md:p-6 bg-[#F8F9FA] grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-7 space-y-5">
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl shadow-sm">
+                        <div class="flex items-start">
+                            <span class="text-xl mr-2">🛡️</span>
+                            <div>
+                                <h4 class="text-xs font-bold text-amber-900">결제 미입력 안전 시연 가이드</h4>
+                                <p class="text-[11px] text-amber-800 mt-0.5 leading-relaxed">
+                                    광고 문구와 로고를 등록한 후 **'결제 세부정보 입력'** 전 단계에서 이탈하면 구글 애즈 서버에 **초안(Draft)**으로 안전하게 보존됩니다.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm space-y-4">
+                        <h4 class="text-xs font-bold text-[#1D3557] border-b pb-2 flex justify-between items-center">
+                            <span>1. 비즈니스 기본 정보</span>
+                            <span class="text-[10px] text-gray-400 font-normal">필수 항목</span>
+                        </h4>
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-700 mb-1">최종 URL (도착 매장 주소)</label>
+                            <input type="text" id="simUrl" value="https://www.ddalgishop.com/" oninput="updatePreview()" class="w-full text-xs p-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-[#4285F4] outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-700 mb-1">업체명 (상호명)</label>
+                            <input type="text" id="simBrand" value="DDALGISHOP" oninput="updatePreview()" class="w-full text-xs p-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-[#4285F4] outline-none transition">
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm space-y-4">
+                        <h4 class="text-xs font-bold text-[#1D3557] border-b pb-2 flex justify-between items-center">
+                            <span>2. 광고 문구 및 카피 (제미나이 생성)</span>
+                            <span class="text-[10px] text-[#2A9D8F] font-bold">AI 연동</span>
+                        </h4>
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-700 mb-1">광고 헤드라인 (제목)</label>
+                            <input type="text" id="simTitle" value="감성 가득 디자인 문구 딸기샵 - 매일 쓰고 싶은 귀여운 팬시" oninput="updatePreview()" class="w-full text-xs p-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-[#4285F4] outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-700 mb-1">광고 설명글</label>
+                            <textarea id="simDesc" rows="3" oninput="updatePreview()" class="w-full text-xs p-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-[#4285F4] outline-none transition">귀여운 캐릭터 문구부터 감성 다꾸 용품까지 딸기샵에서 다채롭게 만나보세요. 마음에 쏙 드는 특별한 문구용품! 지금 딸기샵 공식 몰에서 바로 확인해 보세요.</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 flex flex-col justify-between space-y-4">
+                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+                        <div>
+                            <div class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Campaign Optimization</div>
+                            <div class="text-xs font-bold text-[#1D3557]">캠페인 최적화 점수</div>
+                        </div>
+                        <div class="flex items-center space-x-2 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-full">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span class="text-base font-black text-emerald-600">95.6%</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-gray-300 shadow-md p-4 space-y-3">
+                        <div class="flex items-center justify-between border-b pb-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-blue-500 font-bold text-sm">G</span>
+                                <span class="text-xs font-semibold text-gray-500">모바일 검색 광고 미리보기</span>
+                            </div>
+                        </div>
+                        <div class="bg-[#F8F9FA] rounded-xl p-3.5 border border-gray-200 space-y-2">
+                            <div class="flex items-center justify-between text-[11px]">
+                                <div class="flex items-center space-x-1.5">
+                                    <span class="font-black text-black">스폰서</span>
+                                    <span class="text-gray-300">•</span>
+                                    <span id="prevUrl" class="text-gray-600 font-medium truncate max-w-[170px]">www.ddalgishop.com/</span>
+                                </div>
+                            </div>
+                            <div id="prevBrand" class="text-[11px] font-bold text-gray-800 tracking-wide">DDALGISHOP</div>
+                            <div id="prevTitle" class="text-sm font-bold text-[#1A0DAB] hover:underline leading-snug cursor-pointer">
+                                감성 가득 디자인 문구 딸기샵 - 매일 쓰고 싶은 귀여운 팬시
+                            </div>
+                            <div id="prevDesc" class="text-xs text-gray-600 leading-relaxed line-clamp-3">
+                                귀여운 캐릭터 문구부터 감성 다꾸 용품까지 딸기샵에서 다채롭게 만나보세요. 마음에 쏙 드는 특별한 문구용품! 지금 딸기샵 공식 몰에서 바로 확인해 보세요.
+                            </div>
+                            <div class="pt-2">
+                                <div class="w-full h-32 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200 flex flex-col items-center justify-center p-2 text-center shadow-inner">
+                                    <span class="text-xs font-bold text-red-700">Strawberry Jam Diary</span>
+                                    <span class="text-[10px] text-red-500">딸기샵 시그니처 굿즈</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="alert('초안(Draft) 상태로 구글 애즈 캠페인 저장이 안전하게 완료되었습니다.'); closeAdsModal();" class="w-full teal-bg text-white font-black py-3.5 px-4 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 text-xs flex items-center justify-center space-x-2">
+                        <span>✅</span>
+                        <span>캠페인 초안 저장 상태 확인 완료</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 글쓰기 모달 팝업 -->
+    <div id="writeModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xl w-full shadow-2xl overflow-hidden border border-gray-100">
+            <div class="bg-[#1D3557] text-white px-6 py-4 flex justify-between items-center">
+                <h3 class="font-bold text-sm">✏️ 게시글 작성하기</h3>
+                <button onclick="closeWriteModal()" class="text-gray-300 hover:text-white font-bold">✕</button>
+            </div>
+            <form onsubmit="submitPost(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">카테고리</label>
+                    <select id="postCategory" class="w-full text-xs p-2.5 border rounded-lg outline-none focus:ring-2 focus:ring-[#2A9D8F] bg-gray-50">
+                        <option value="질문">❓ 질문/피드백</option>
+                        <option value="후기">🎉 실습 인증</option>
+                        <option value="공지">📢 공지 (강사 전용)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">작성자 (상호명/닉네임)</label>
+                    <input type="text" id="postAuthor" required placeholder="예: 딸기샵 사장님" class="w-full text-xs p-2.5 border rounded-lg outline-none focus:ring-2 focus:ring-[#2A9D8F]">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">제목</label>
+                    <input type="text" id="postTitle" required placeholder="글 제목을 입력해 주세요" class="w-full text-xs p-2.5 border rounded-lg outline-none focus:ring-2 focus:ring-[#2A9D8F]">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">내용</label>
+                    <textarea id="postContent" rows="5" required placeholder="실습 질문이나 공유하고 싶은 내용을 자유롭게 작성해 주세요." class="w-full text-xs p-2.5 border rounded-lg outline-none focus:ring-2 focus:ring-[#2A9D8F]"></textarea>
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeWriteModal()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-xs font-bold text-gray-600 rounded-lg">취소</button>
+                    <button type="submit" class="px-5 py-2 teal-bg text-white text-xs font-bold rounded-lg shadow">등록하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="bg-gray-900 text-gray-400 py-8 px-4 text-center text-xs mt-auto">
+        <div class="max-w-6xl mx-auto space-y-2">
+            <p class="font-bold text-white text-sm">제인쌤의 소상공인 AI 라이브 랩 • 15기 강릉</p>
+            <p>문의사항 : contact@janessam.aicink.co.kr</p>
+            <p class="text-gray-600">© 2026 janessam.ddalgishop.com All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 스크립트 -->
+    <script>
+        let posts = [
+            { id: '공지', cat: '공지', title: '[강릉 15기] 구글 애즈 실습 전 준비사항 및 과금 차단 가이드', author: '제인쌤 👑', date: '2026.11.01', content: '결제 정보 입력 없이 초안으로 저장되는 0원 안전 시연 메커니즘을 숙지하고 실습을 진행해 주세요.' },
+            { id: 2, cat: '질문', title: '제미나이로 작성한 다이어리 광고 문구 피드백 부탁드립니다!', author: '딸기네문구', date: '2026.11.03', content: '헤드라인을 감성 다꾸에 맞췄는데 최적화 점수 올려보려면 더 보완할 점이 있을까요?' },
+            { id: 1, cat: '후기', title: 'ddalgishop.com 주소로 웹 랜딩페이지 연결 완료했습니다!', author: '강릉대표사장', date: '2026.11.02', content: '제인쌤 안내대로 버셀 연동 후 모바일 화면까지 완벽하게 확인했습니다.' }
+        ];
+
+        function openWriteModal() { document.getElementById('writeModal').classList.remove('hidden'); }
+        function closeWriteModal() { document.getElementById('writeModal').classList.add('hidden'); }
+        
+        function openAdsModal() { document.getElementById('adsSimulatorModal').classList.remove('hidden'); }
+        function closeAdsModal() { document.getElementById('adsSimulatorModal').classList.add('hidden'); }
+
+        function updatePreview() {
+            document.getElementById('prevUrl').innerText = document.getElementById('simUrl').value || 'www.ddalgishop.com/';
+            document.getElementById('prevBrand').innerText = document.getElementById('simBrand').value || 'DDALGISHOP';
+            document.getElementById('prevTitle').innerText = document.getElementById('simTitle').value || '광고 제목을 입력해 주세요';
+            document.getElementById('prevDesc').innerText = document.getElementById('simDesc').value || '광고 설명을 입력해 주세요';
+        }
+
+        function submitPost(e) {
+            e.preventDefault();
+            const cat = document.getElementById('postCategory').value;
+            const author = document.getElementById('postAuthor').value;
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').value;
+            const date = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
+
+            const newPost = { id: posts.length + 1, cat, title, author, date, content };
+            posts.splice(1, 0, newPost);
+
+            renderPosts(posts);
+            closeWriteModal();
+            alert('게시글이 성공적으로 등록되었습니다!');
+        }
+
+        function renderPosts(list) {
+            const tbody = document.getElementById('postTableBody');
+            tbody.innerHTML = list.map(p => `
+                <tr class="hover:bg-gray-50 transition ${p.cat === '공지' ? 'bg-amber-50/30' : ''}">
+                    <td class="p-3.5 text-center font-bold ${p.cat === '공지' ? 'text-amber-600' : 'text-gray-400'}">${p.id}</td>
+                    <td class="p-3.5 text-center">
+                        <span class="${p.cat === '공지' ? 'bg-amber-100 text-amber-800' : p.cat === '질문' ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800'} text-[10px] font-bold px-2 py-0.5 rounded">${p.cat}</span>
+                    </td>
+                    <td class="p-3.5 font-medium text-gray-800 cursor-pointer hover:underline" onclick="alert('${p.title}\\n\\n작성자: ${p.author}\\n내용: ${p.content}')">
+                        ${p.title}
+                    </td>
+                    <td class="p-3.5 text-center text-gray-600">${p.author}</td>
+                    <td class="p-3.5 text-center text-gray-400 text-xs">${p.date}</td>
+                </tr>
+            `).join('');
+        }
+
+        function filterCategory(cat) {
+            if (cat === '전체') renderPosts(posts);
+            else renderPosts(posts.filter(p => p.cat === cat));
+        }
+
+        function searchPosts() {
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            renderPosts(posts.filter(p => p.title.toLowerCase().includes(q) || p.author.toLowerCase().includes(q)));
+        }
+
+        function viewPost(idx) {
+            const p = posts[idx];
+            alert(`${p.title}\n\n작성자: ${p.author}\n내용: ${p.content}`);
+        }
+    </script>
+</body>
+</html>

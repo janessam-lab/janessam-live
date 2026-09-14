@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제인쌤의 소상공인 AI 라이브 랩 - 강릉 15기</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Pretendard', sans-serif; background-color: #F8F9FA; }
+        .navy-theme { background-color: #1D3557; }
+        .teal-accent { color: #2A9D8F; }
+        .teal-bg { background-color: #2A9D8F; }
+        .teal-bg:hover { background-color: #218377; }
+        .icon-circle { background-color: #F1EEF7; transition: all 0.3s ease; }
+        .icon-circle:hover { background-color: #E2DCE8; transform: translateY(-3px); }
+
+        /* WEEK 1: 파란색 테마 */
+        .week-card-1 .card-box { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 2px solid #E5E7EB; background-color: #FFFFFF; }
+        .week-card-1:hover .card-box, .week-card-1:target .card-box { border-color: #3B82F6 !important; background-color: #EFF6FF !important; box-shadow: 0 12px 30px -5px rgba(59, 130, 246, 0.18); }
+        .week-card-1:hover .week-title, .week-card-1:target .week-title { color: #2563EB !important; }
+
+        /* WEEK 2: 빨간색 테마 */
+        .week-card-2 .card-box { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 2px solid #E5E7EB; background-color: #FFFFFF; }
+        .week-card-2:hover .card-box, .week-card-2:target .card-box { border-color: #EF4444 !important; background-color: #FEF2F2 !important; box-shadow: 0 12px 30px -5px rgba(239, 68, 68, 0.18); }
+        .week-card-2:hover .week-title, .week-card-2:target .week-title { color: #DC2626 !important; }
+
+        /* WEEK 3: 주황색 테마 */
+        .week-card-3 .card-box { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 2px solid #E5E7EB; background-color: #FFFFFF; }
+        .week-card-3:hover .card-box, .week-card-3:target .card-box { border-color: #F59E0B !important; background-color: #FFFBEB !important; box-shadow: 0 12px 30px -5px rgba(245, 158, 11, 0.18); }
+        .week-card-3:hover .week-title, .week-card-3:target .week-title { color: #D97706 !important; }
+
+        /* WEEK 4: 초록색 테마 */
+        .week-card-4 .card-box { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 2px solid #E5E7EB; background-color: #FFFFFF; }
+        .week-card-4:hover .card-box, .week-card-4:target .card-box { border-color: #10B981 !important; background-color: #ECFDF5 !important; box-shadow: 0 12px 30px -5px rgba(16, 185, 129, 0.18); }
+        .week-card-4:hover .week-title, .week-card-4:target .week-title { color: #059669 !important; }
+
+        /* WEEK 5: 파란색 테마 */
+        .week-card-5 .card-box { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 2px solid #E5E7EB; background-color: #FFFFFF; }
+        .week-card-5:hover .card-box, .week-card-5:target .card-box { border-color: #3B82F6 !important; background-color: #EFF6FF !important; box-shadow: 0 12px 30px -5px rgba(59, 130, 246, 0.18); }
+        .week-card-5:hover .week-title, .week-card-5:target .week-title { color: #2563EB !important; }
+
+        /* 결과물 카드 클릭/호버 애니메이션 스타일 */
+        .outcome-card {
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .outcome-card .outcome-icon {
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .outcome-card.active, .outcome-card:hover {
+            box-shadow: 0 20px 35px -5px rgba(30, 58, 138, 0.2), 0 10px 15px -5px rgba(0, 0, 0, 0.08);
+            border-color: #2563EB;
+            transform: translateY(-4px);
+        }
+        .outcome-card.active .outcome-icon, .outcome-card:hover .outcome-icon {
+            transform: scale(1.22) rotate(2deg);
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased">
+
+    <!-- 1. 상단 라이브 알림 바 -->
+    <div class="bg-red-600 text-white text-xs md:text-sm font-semibold py-2 px-4 text-center flex items-center justify-center gap-2 shadow-inner">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-white animate-ping"></span>
+        <span>🔴 [15기 강원 강릉] 소상공인 5주 완성 AI 실전반 전용 강의실 (장소: 강릉 로컬창업타운)</span>
+    </div>
+
+    <!-- 2. 상단 워크숍 헤더 -->
+    <div class="bg-[#007A78] text-white pt-8 pb-4 px-4 sm:px-8 font-sans">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-4">
+                <span class="inline-block border border-white/60 rounded-full px-4 py-1 text-xs font-bold tracking-wider">
+                    TODAY'S WORKSHOP • 15기 강릉
+                </span>
+            </div>
+
+            <h1 class="text-2xl sm:text-4xl font-black mb-3 tracking-tight flex items-center gap-2">
+                <span class="text-yellow-400">★</span>
+                <span>JANE'S <span class="text-yellow-400">ADS</span> LIVE LAB</span>
+            </h1>
+
+            <div class="border-l-2 border-white pl-3 mb-8">
+                <p class="text-sm sm:text-lg font-medium text-gray-100">
+                    구글 애즈 캠페인 설계 &amp; AI 매장 자동화 · 강릉 5주 실전 프로젝트
+                </p>
+            </div>
+
+            <!-- 하단 네비게이션 탭 -->
+            <div class="flex items-center gap-2 sm:gap-4 overflow-x-auto pb-2 scrollbar-none text-xs sm:text-sm font-bold">
+                <a href="index.html" class="bg-white text-[#007A78] px-4 py-2.5 rounded-xl border-2 border-black shadow-sm flex items-center gap-1.5 whitespace-nowrap">
+                    <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    <span>구글애즈 공식(강의노트)</span>
+                </a>
+                <a href="#curriculum-section" class="hover:bg-white/10 px-3 py-2.5 rounded-xl transition flex items-center gap-1.5 whitespace-nowrap text-white">
+                    <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span>강릉 커리큘럼</span>
+                </a>
+                <button onclick="openAdsModal()" class="hover:bg-white/10 px-3 py-2.5 rounded-xl transition flex items-center gap-1.5 whitespace-nowrap text-white">
+                    <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span>광고 시연(실습)</span>
+                </button>
+                <a href="https://padlet.com/janeaicinklab/jane-s-ads-live-lab-ihcvzhdqld5snx8s" target="_blank" class="hover:bg-white/10 px-3 py-2.5 rounded-xl transition flex items-center gap-1.5 whitespace-nowrap text-white">
+                    <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                    <span>패들렛</span>
+                </a>
+                <a href="janessam-board.html" class="hover:bg-white/10 px-3 py-2.5 rounded-xl transition flex items-center gap-1.5 whitespace-nowrap text-white">
+                    <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                    <span>게시판</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. 연관주제어 바 -->
+    <section class="max-w-6xl mx-auto px-4 pt-6 pb-2">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col md:flex-row items-stretch">
+            <div class="bg-[#F0F4F8] px-6 py-4 flex items-center border-b md:border-b-0 md:border-r border-gray-200 min-w-[140px]">
+                <h3 class="text-sm font-black text-[#1D3557] tracking-tight">연관주제어</h3>
+            </div>
+            <div class="p-4 flex flex-wrap items-center gap-2.5 bg-white flex-1">
+                <span class="bg-[#1E72D8] text-white text-xs md:text-sm font-bold px-4 py-1.5 rounded-full shadow-sm hover:bg-[#155CB8] transition cursor-pointer">#구글교육</span>
+                <span class="bg-[#1E72D8] text-white text-xs md:text-sm font-bold px-4 py-1.5 rounded-full shadow-sm hover:bg-[#155CB8] transition cursor-pointer">#상생협업 구글</span>
+                <span class="bg-[#1E72D8] text-white text-xs md:text-sm font-bold px-4 py-1.5 rounded-full shadow-sm hover:bg-[#155CB8] transition cursor-pointer">#구글AI교육</span>
+                <span class="bg-[#1E72D8] text-white text-xs md:text-sm font-bold px-4 py-1.5 rounded-full shadow-sm hover:bg-[#155CB8] transition cursor-pointer">#구글클라우드교육</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. 강릉 15기 수강생 전용 상생지원 혜택 안내 카드 -->
+    <section class="max-w-6xl mx-auto px-4 pt-4 pb-2">
+        <div class="bg-gradient-to-r from-[#1D3557] to-[#007A78] text-white rounded-2xl p-6 shadow-md border border-gray-100">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="bg-yellow-400 text-gray-900 text-xs font-black px-2.5 py-0.5 rounded-full">민간기업 상생지원</span>
+                <span class="text-xs text-gray-200 font-bold">15기 강릉 수강생 전용 혜택</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white/10 backdrop-blur-sm p-4 rounded-xl border border-white/20">
+                    <div class="text-yellow-300 font-bold text-sm mb-1">🎁 Google Gemini (Google AI Pro) 구독권</div>
+                    <p class="text-xs text-gray-200">총 2개월 무상 제공 (교육 중 1개월 + 수료 후 1개월)<br><span class="text-[11px] opacity-80">* Gemini 3 Pro 모델, Deep Research, 동영상 생성 기능 지원</span></p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm p-4 rounded-xl border border-white/20">
+                    <div class="text-yellow-300 font-bold text-sm mb-1">💳 Google Ads 실전 광고 크레딧</div>
+                    <p class="text-xs text-gray-200">총 30만 원 상당 제공 (교육 중 22만 원 + 수료 후 8만 원)<br><span class="text-[11px] opacity-80">* 구글 검색 및 유튜브 맞춤형 광고 실제 집행 예산</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. 수강생 필수 3대 AI 실습 도구 (개발자 도구 영역 교체 완료) -->
+    <section class="max-w-6xl mx-auto px-4 pt-4 pb-4">
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center">
+            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">수업 필수 AI 실습 도구 바로가기</h3>
+            <div class="flex justify-center items-center space-x-10 md:space-x-20">
+                <a href="https://gemini.google.com" target="_blank" class="group flex flex-col items-center">
+                    <div class="icon-circle w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-sm bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100">
+                        <span class="text-2xl md:text-3xl">✨</span>
+                    </div>
+                    <span class="mt-3 text-sm md:text-base font-bold text-gray-800 tracking-tight">Gemini (제미나이)</span>
+                </a>
+                <a href="https://www.canva.com" target="_blank" class="group flex flex-col items-center">
+                    <div class="icon-circle w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-sm bg-gradient-to-br from-cyan-50 to-teal-50 border border-cyan-100">
+                        <span class="text-2xl md:text-3xl">🎨</span>
+                    </div>
+                    <span class="mt-3 text-sm md:text-base font-bold text-gray-800 tracking-tight">Canva (캔바)</span>
+                </a>
+                <a href="https://chatgpt.com" target="_blank" class="group flex flex-col items-center">
+                    <div class="icon-circle w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-sm bg-gradient-to-br from-emerald-50 to-green-50 border border-emerald-100">
+                        <span class="text-2xl md:text-3xl">🤖</span>
+                    </div>
+                    <span class="mt-3 text-sm md:text-base font-bold text-gray-800 tracking-tight">ChatGPT (챗GPT)</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. 3단계 실습 숏컷 카드 -->
+    <section class="max-w-6xl mx-auto px-4 py-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- STEP 1 -->
+            <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-100 relative overflow-hidden">
+                <div class="text-xs font-bold teal-accent mb-1">STEP 01</div>
+                <h3 class="text-xl font-bold text-[#1D3557] mb-2">AI 카피라이팅</h3>
+                <p class="text-xs text-gray-500 mb-4">제미나이(Gemini)로 1분 만에 내 매장 맞춤형 광고 문구 완성하기</p>
+                <button onclick="navigator.clipboard.writeText('소상공인 맞춤 제미나이 프롬프트 샘플'); alert('프롬프트가 복사되었습니다!');" class="w-full py-2 bg-gray-50 hover:bg-gray-100 text-xs font-bold text-[#1D3557] rounded-lg border border-gray-200 transition">
+                    📋 프롬프트 복사하기
+                </button>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="bg-white rounded-2xl p-6 shadow-md border-2 border-[#2A9D8F] relative overflow-hidden">
+                <span class="absolute top-0 right-0 bg-[#2A9D8F] text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg">추천</span>
+                <div class="text-xs font-bold teal-accent mb-1">STEP 02</div>
+                <h3 class="text-xl font-bold text-[#1D3557] mb-2">웹 랜딩페이지</h3>
+                <p class="text-xs text-gray-500 mb-4">내 가상 매장(딸기샵) 사이트 세팅하기 (`ddalgishop.com` 연동)</p>
+                <a href="https://ddalgishop.com" target="_blank" class="block text-center w-full py-2 teal-bg text-white text-xs font-bold rounded-lg shadow-sm transition">
+                    🔗 ddalgishop.com 바로가기
+                </a>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-100 relative overflow-hidden">
+                <div class="text-xs font-bold teal-accent mb-1">STEP 03</div>
+                <h3 class="text-xl font-bold text-[#1D3557] mb-2">구글 애즈 실전 시연</h3>
+                <p class="text-xs text-gray-500 mb-4">카드 결제 정보 입력 없이 안전하게 초안 저장 및 최적화 점수(95.6%) 확인</p>
+                <button onclick="openAdsModal()" class="w-full py-2 bg-[#1D3557] hover:bg-[#152740] text-xs font-bold text-white rounded-lg transition shadow flex items-center justify-center gap-1">
+                    <span>💡</span> 시연 가이드 직접 실습하기
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. 카드형 실습 중심 커리큘럼 -->
+    <section id="curriculum-section" class="max-w-6xl mx-auto px-4 py-8 mb-8">
+        <div class="mb-6">
+            <h2 class="text-2xl md:text-3xl font-black text-gray-900 tracking-tight mb-1">
+                우리 가게에 <span class="text-blue-600">바로 쓰는 실습 중심 커리큘럼</span>
+            </h2>
+            <p class="text-xs md:text-sm text-gray-500">
+                매주 오프라인(화) 실습과 실시간 온라인(목) 강의가 함께 진행됩니다.
+            </p>
+        </div>
+
+        <!-- 주차 빠른 이동 버튼 -->
+        <div class="flex flex-wrap items-center gap-2 mb-8 bg-white p-3.5 rounded-2xl shadow-sm border border-gray-200">
+            <span class="text-xs font-bold text-gray-400 mr-2">빠른 이동:</span>
+            <a href="#week1" class="bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-600 hover:text-white px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span> AI 콘텐츠 (WEEK 1)
+            </a>
+            <span class="text-gray-300">➔</span>
+            <a href="#week2" class="bg-red-50 text-red-600 border border-red-200 hover:bg-red-600 hover:text-white px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span> 매장 운영·자동화 (WEEK 2)
+            </a>
+            <span class="text-gray-300">➔</span>
+            <a href="#week3" class="bg-amber-50 text-amber-600 border border-amber-200 hover:bg-amber-600 hover:text-white px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-amber-500"></span> 광고 집행 (WEEK 3)
+            </a>
+            <span class="text-gray-300">➔</span>
+            <a href="#week4" class="bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-600 hover:text-white px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> 실전 코칭 (WEEK 4)
+            </a>
+            <span class="text-gray-300">➔</span>
+            <a href="#week5" class="bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-600 hover:text-white px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span> 성과 분석 (WEEK 5)
+            </a>
+        </div>
+
+        <!-- 커리큘럼 타임라인 카드 리스트 -->
+        <div class="relative pl-6 md:pl-10 space-y-6 border-l-2 border-gray-200 ml-4 md:ml-8">
+
+            <!-- WEEK 1 -->
+            <div id="week1" class="week-card-1 relative scroll-mt-24 cursor-pointer">
+                <div class="absolute -left-[43px] md:-left-[59px] top-0 w-12 h-12 md:w-14 md:h-14 bg-blue-500 text-white rounded-2xl flex flex-col items-center justify-center font-black text-[10px] md:text-xs shadow-md border-4 border-white">
+                    <span>WEEK</span>
+                    <span class="text-sm md:text-base leading-none">1</span>
+                </div>
+                <div class="card-box rounded-3xl p-5 md:p-6 shadow-sm">
+                    <h3 class="week-title text-base md:text-xl font-extrabold text-gray-900 mb-4 transition-colors">
+                        AI 첫걸음 &amp; 우리 가게 자산 만들기
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-sm">
+                        <div class="space-y-1.5">
+                            <div class="font-bold text-blue-600 flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-blue-600"></span> 오프라인 • 화
+                            </div>
+                            <ul class="text-gray-600 space-y-1 pl-3 border-l-2 border-gray-200">
+                                <li>• OT · 생성형 AI 주요 도구 탐색</li>
+                                <li>• AI 콘텐츠 생성 실습</li>
+                                <li>• Google 비즈니스 프로필 등록 &amp; 적용</li>
+                            </ul>
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="font-bold text-indigo-600 flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-indigo-600"></span> 온라인 • 목
+                            </div>
+                            <ul class="text-gray-600 space-y-1 pl-3 border-l-2 border-gray-200">
+                                <li>• 프롬프트 엔지니어링 심화</li>
+                                <li>• AI 이미지·디자인 활용</li>
+                                <li>• 실습 결과 피드백</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 2 -->
+            <div id="week2" class="week-card-2 relative scroll-mt-24 cursor-pointer">
+                <div class="absolute -left-[43px] md:-left-[59px] top-0 w-12 h-12 md:w-14 md:h-14 bg-red-500 text-white rounded-2xl flex flex-col items-center justify-center font-black text-[10px] md:text-xs shadow-md border-4 border-white">
+                    <span>WEEK</span>
+                    <span class="text-sm md:text-base leading-none">2</span>
+                </div>
+                <div class="card-box rounded-3xl p-5 md:p-6 shadow-sm">
+                    <h3 class="week-title text-base md:text-xl font-extrabold text-gray-900 mb-4 transition-colors">
+                        데이터로 보는 매장 &amp; 나만의 AI 비서
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-sm">
+                        <div class="space-y-1.5">
+                            <div class="font-bold text-blue-600 flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-blue-600"></span> 오프라인 • 화
+                            </div>
+                            <ul class="text-gray-600 space-y-1 pl-3 border-l-2 border-gray-200">
+                                <li>• 매장 데이터 AI 분석</li>
+                                <li>• 고객 소통 AI 자동화·시각화</li>
+                                <li>• 내 매장 AI 비서 설계</li>
+                            </ul>
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="font-bold text-indigo-600 flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-indigo-600"></span> 온라인 • 목
+                            </div>
+                            <ul class="text-gray-600 space-y-1 pl-3 border-l-2 border-gray-200">
+                                <li>• AI 비서 고도화 (프롬프트 체계화)</li>
+                                <li>• AI 기반 경쟁사 분석 실습</li>
+                                <li>• Google Ads 기초 안내</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 3 -->
+            <div id="week3" class="week-card-3 relative scroll-mt-24 cursor-pointer">
+                <div class="absolute -left-[43px] md:-left-[59px] top-0 w-12 h-12 md:w-14 md:h-14 bg-amber-500 text-white rounded-2xl flex flex-col items-center justify-center font-black text-[10px] md:text-xs shadow-md border-4 border-white">
+                    <span>WEEK</span>
+                    <span class="text-sm md:text-base leading-none">3</span>
+                </div>
+                <div class="card-box rounded-3xl p-5 md:p-6 shadow-sm">
+                    <h3 class="week-title text-base md:text-xl font-extrabold text-gray-900 mb-4 transition-colors">
+                        광고로 손님 부르기 &amp; 업종별 프로젝트
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-sm">
+                        <div class="space-y-1.5">
+                            <div class="font-bold text-blue-600 flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-blue-600"></span> 오프라인 • 화
+                            </div>
+                            <ul class="text-gray-600 space-y-1 pl-3 border-l-2 border-gray-200">
+                                <li>• Google Ads 캠페인 설계</li>
+                                <li>• 업종별 심화 프로젝트</li>
+                                <li>• AI 마케팅 · AI 업무 자동화</li>
+                            </ul>
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="font-bold text-indigo-600 flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-indigo-600"></span> 온라인 • 목
+                            </div>
+                            <ul class="text-gray-600 space-y-1 pl-3 border-l-2 border-gray-200">
+                                <li>• Google Ads 심화</li>
+                                <li>• 업종별 마케팅 전략 점검</li>
+                                <li>• 발표자료 작성 가이드</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 4 -->
+            <div id="week4" class="week-card-4 relative scroll-mt-24 cursor-pointer">
+                <div class="absolute -left-[43px] md:-left-[59px] top-0 w-12 h-12 md:w-14 md:h-14 bg-emerald-500 text-white rounded-2xl flex flex-col items-center justify-center font-black text-[10px] md:text-xs shadow-md border-4 border-white">
+                    <span>WEEK</span>
+                    <span class="text-sm md:text-base leading-none">4</span>
+                </div>
+                <div class="card-box rounded-3xl p-5 md:p-6 shadow-sm">
+                    <h3 class="week-title text-base md:text-xl font-extrabold text-gray-900 mb-4 transition-colors">
+                        실전 준비 &amp; 1:1 코칭
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-sm">
+                        <div class="space-y-1.5">
+                            <div class="font-bold text-blue-600 flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-blue-600"></span> 개별 과제 · 교육장 방문 없음
+                            </div>
+                            <ul class="text-gray-600 space-y-1 pl-3 border-l-2 border-gray-200">
+                                <li>• 발표자료 초안 작성</li>
+                                <li>• 광고 사전 준비</li>
+                            </ul>
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="font-bold text-indigo-600 flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-indigo-600"></span> 온라인 · 목
+                            </div>
+                            <ul class="text-gray-600 space-y-1 pl-3 border-l-2 border-gray-200">
+                                <li>• Google Ads 크레딧 배포</li>
+                                <li>• 조별 1:1 개별 피드백(줌 코칭)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WEEK 5 -->
+            <div id="week5" class="week-card-5 relative scroll-mt-24 cursor-pointer">
+                <div class="absolute -left-[43px] md:-left-[59px] top-0 w-12 h-12 md:w-14 md:h-14 bg-blue-500 text-white rounded-2xl flex flex-col items-center justify-center font-black text-[10px] md:text-xs shadow-md border-4 border-white">
+                    <span>WEEK</span>
+                    <span class="text-sm md:text-base leading-none">5</span>
+                </div>
+                <div class="card-box rounded-3xl p-5 md:p-6 shadow-sm">
+                    <h3 class="week-title text-base md:text-xl font-extrabold text-gray-900 mb-4 transition-colors">
+                        성과 공유 &amp; 네트워킹
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-sm">
+                        <div class="space-y-1.5">
+                            <div class="font-bold text-blue-600 flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-blue-600"></span> 마무리
+                            </div>
+                            <ul class="text-gray-600 space-y-1 pl-3 border-l-2 border-gray-200">
+                                <li>• 교육생 네트워킹</li>
+                                <li>• 우수사례 발표 · 시상</li>
+                                <li>• 성과 공유회</li>
+                            </ul>
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="font-bold text-indigo-600 flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-indigo-600"></span> 수료 후
+                            </div>
+                            <ul class="text-gray-600 space-y-1 pl-3 border-l-2 border-gray-200">
+                                <li>• Google Ads 운영 클리닉</li>
+                                <li>• 광고비 크레딧으로 실전 집행</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 8. 고화질 맞춤 아이콘 및 클릭 시 아이콘 확대 + 대형 입체 그림자 인터랙션 적용 섹션 -->
+    <section class="max-w-6xl mx-auto px-4 py-8 mb-12">
+        <div class="text-center mb-8">
+            <span class="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full mb-2">
+                수강 결과물
+            </span>
+            <h2 class="text-2xl md:text-4xl font-black text-gray-900 tracking-tight mb-2">
+                교육이 끝나면 <span class="text-blue-600">이게 손에 남습니다</span>
+            </h2>
+            <p class="text-xs md:text-sm text-gray-500">
+                우리 가게에 바로 적용할 수 있는, 직접 만든 결과물입니다. 아이콘 카드를 클릭해 보세요!
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- 1. 피드 디자인 템플릿 -->
+            <div onclick="toggleOutcomeCard(this)" class="outcome-card bg-white rounded-3xl p-6 shadow-sm border border-gray-200 flex items-center gap-5 cursor-pointer">
+                <div class="w-20 h-20 rounded-2xl flex items-center justify-center shrink-0 overflow-hidden p-1">
+                    <img src="피드 디자인 템플릿.png" alt="피드 디자인 템플릿" class="outcome-icon w-full h-full object-contain">
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">피드 디자인 템플릿</h3>
+                    <p class="text-xs md:text-sm text-gray-500 leading-relaxed">바로 수정해 쓰는 우리 가게 맞춤 SNS 피드 디자인 세트.</p>
+                </div>
+            </div>
+
+            <!-- 2. 숏폼 영상 콘텐츠 -->
+            <div onclick="toggleOutcomeCard(this)" class="outcome-card bg-white rounded-3xl p-6 shadow-sm border border-gray-200 flex items-center gap-5 cursor-pointer">
+                <div class="w-20 h-20 rounded-2xl flex items-center justify-center shrink-0 overflow-hidden p-1">
+                    <img src="숏폼 영상 콘텐츠.png" alt="숏폼 영상 콘텐츠" class="outcome-icon w-full h-full object-contain">
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">숏폼 영상 콘텐츠</h3>
+                    <p class="text-xs md:text-sm text-gray-500 leading-relaxed">가게 소개·상품 홍보·이벤트 안내에 쓰는 짧은 영상.</p>
+                </div>
+            </div>
+
+            <!-- 3. 월간 콘텐츠 캘린더 -->
+            <div onclick="toggleOutcomeCard(this)" class="outcome-card bg-white rounded-3xl p-6 shadow-sm border border-gray-200 flex items-center gap-5 cursor-pointer">
+                <div class="w-20 h-20 rounded-2xl flex items-center justify-center shrink-0 overflow-hidden p-1">
+                    <img src="월간 콘텐츠 캘린더.png" alt="월간 콘텐츠 캘린더" class="outcome-icon w-full h-full object-contain">
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">월간 콘텐츠 캘린더</h3>
+                    <p class="text-xs md:text-sm text-gray-500 leading-relaxed">무엇을 언제 올릴지 정리된 SNS 운영 일정표.</p>
+                </div>
+            </div>
+
+            <!-- 4. 홍보 문구 & 프롬프트 레시피북 -->
+            <div onclick="toggleOutcomeCard(this)" class="outcome-card bg-white rounded-3xl p-6 shadow-sm border border-gray-200 flex items-center gap-5 cursor-pointer">
+                <div class="w-20 h-20 rounded-2xl flex items-center justify-center shrink-0 overflow-hidden p-1">
+                    <img src="홍보 문구 & 프롬프트 레시피북.png" alt="홍보 문구 & 프롬프트 레시피북" class="outcome-icon w-full h-full object-contain">
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">홍보 문구 &amp; 프롬프트 레시피북</h3>
+                    <p class="text-xs md:text-sm text-gray-500 leading-relaxed">게시물 문구·아이디어를 빠르게 뽑는 AI 활용 모음.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 9. 구글 애즈 모달 -->
+    <div id="adsSimulatorModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-3 md:p-6">
+        <div class="bg-white rounded-2xl max-w-5xl w-full max-h-[92vh] overflow-hidden flex flex-col shadow-2xl border border-gray-200">
+            <div class="bg-[#4285F4] text-white px-6 py-3.5 flex justify-between items-center shadow-md">
+                <div class="flex items-center space-x-3">
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    <div>
+                        <div class="text-[11px] opacity-90 font-medium">Google Ads • 첫 번째 캠페인 만들기</div>
+                        <h3 class="text-base font-bold leading-none">실전 광고 소재 구성 &amp; 안전 시연</h3>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="bg-white/20 text-white text-xs px-2.5 py-1 rounded-full font-bold">초안 자동 저장 중</span>
+                    <button onclick="closeAdsModal()" class="text-white hover:bg-white/20 rounded-lg p-1 text-lg font-bold transition">✕</button>
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-4 md:p-6 bg-[#F8F9FA] grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-7 space-y-5">
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl shadow-sm">
+                        <div class="flex items-start">
+                            <span class="text-xl mr-2">🛡️</span>
+                            <div>
+                                <h4 class="text-xs font-bold text-amber-900">결제 미입력 안전 시연 가이드</h4>
+                                <p class="text-[11px] text-amber-800 mt-0.5 leading-relaxed">
+                                    광고 문구와 로고를 등록한 후 **'결제 세부정보 입력'** 전 단계에서 이탈하면 구글 애즈 서버에 **초안(Draft)**으로 안전하게 보존됩니다.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm space-y-4">
+                        <h4 class="text-xs font-bold text-[#1D3557] border-b pb-2 flex justify-between items-center">
+                            <span>1. 비즈니스 기본 정보</span>
+                            <span class="text-[10px] text-gray-400 font-normal">필수 항목</span>
+                        </h4>
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-700 mb-1">최종 URL (도착 매장 주소)</label>
+                            <input type="text" id="simUrl" value="https://www.ddalgishop.com/" oninput="updatePreview()" class="w-full text-xs p-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-[#4285F4] outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-700 mb-1">업체명 (상호명)</label>
+                            <input type="text" id="simBrand" value="DDALGISHOP" oninput="updatePreview()" class="w-full text-xs p-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-[#4285F4] outline-none transition">
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm space-y-4">
+                        <h4 class="text-xs font-bold text-[#1D3557] border-b pb-2 flex justify-between items-center">
+                            <span>2. 광고 문구 및 카피 (제미나이 생성)</span>
+                            <span class="text-[10px] text-[#2A9D8F] font-bold">AI 연동</span>
+                        </h4>
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-700 mb-1">광고 헤드라인 (제목)</label>
+                            <input type="text" id="simTitle" value="감성 가득 디자인 문구 딸기샵 - 매일 쓰고 싶은 귀여운 팬시" oninput="updatePreview()" class="w-full text-xs p-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-[#4285F4] outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-700 mb-1">광고 설명글</label>
+                            <textarea id="simDesc" rows="3" oninput="updatePreview()" class="w-full text-xs p-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-[#4285F4] outline-none transition">귀여운 캐릭터 문구부터 감성 다꾸 용품까지 딸기샵에서 다채롭게 만나보세요. 마음에 쏙 드는 특별한 문구용품! 지금 딸기샵 공식 몰에서 바로 확인해 보세요.</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 flex flex-col justify-between space-y-4">
+                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+                        <div>
+                            <div class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Campaign Optimization</div>
+                            <div class="text-xs font-bold text-[#1D3557]">캠페인 최적화 점수</div>
+                        </div>
+                        <div class="flex items-center space-x-2 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-full">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span class="text-base font-black text-emerald-600">95.6%</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-gray-300 shadow-md p-4 space-y-3">
+                        <div class="flex items-center justify-between border-b pb-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-blue-500 font-bold text-sm">G</span>
+                                <span class="text-xs font-semibold text-gray-500">모바일 검색 광고 미리보기</span>
+                            </div>
+                        </div>
+                        <div class="bg-[#F8F9FA] rounded-xl p-3.5 border border-gray-200 space-y-2">
+                            <div class="flex items-center justify-between text-[11px]">
+                                <div class="flex items-center space-x-1.5">
+                                    <span class="font-black text-black">스폰서</span>
+                                    <span class="text-gray-300">•</span>
+                                    <span id="prevUrl" class="text-gray-600 font-medium truncate max-w-[170px]">www.ddalgishop.com/</span>
+                                </div>
+                            </div>
+                            <div id="prevBrand" class="text-[11px] font-bold text-gray-800 tracking-wide">DDALGISHOP</div>
+                            <div id="prevTitle" class="text-sm font-bold text-[#1A0DAB] hover:underline leading-snug cursor-pointer">
+                                감성 가득 디자인 문구 딸기샵 - 매일 쓰고 싶은 귀여운 팬시
+                            </div>
+                            <div id="prevDesc" class="text-xs text-gray-600 leading-relaxed line-clamp-3">
+                                귀여운 캐릭터 문구부터 감성 다꾸 용품까지 딸기샵에서 다채롭게 만나보세요. 마음에 쏙 드는 특별한 문구용품! 지금 딸기샵 공식 몰에서 바로 확인해 보세요.
+                            </div>
+                            <div class="pt-2">
+                                <div class="w-full h-32 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200 flex flex-col items-center justify-center p-2 text-center shadow-inner">
+                                    <span class="text-xs font-bold text-red-700">Strawberry Jam Diary</span>
+                                    <span class="text-[10px] text-red-500">딸기샵 시그니처 굿즈</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="alert('초안(Draft) 상태로 구글 애즈 캠페인 저장이 안전하게 완료되었습니다.'); closeAdsModal();" class="w-full teal-bg text-white font-black py-3.5 px-4 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 text-xs flex items-center justify-center space-x-2">
+                        <span>✅</span>
+                        <span>캠페인 초안 저장 상태 확인 완료</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 10. 푸터 -->
+    <footer class="bg-gray-900 text-gray-400 py-8 px-4 text-center text-xs">
+        <div class="max-w-6xl mx-auto space-y-2">
+            <p class="font-bold text-white text-sm">제인쌤의 소상공인 AI 라이브 랩 • 15기 강릉</p>
+            <p>문의사항 : contact@janessam.aicink.co.kr</p>
+            <p class="text-gray-600">© 2026 janessam.ddalgishop.com All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 11. 스크립트 -->
+    <script>
+        function openAdsModal() {
+            document.getElementById('adsSimulatorModal').classList.remove('hidden');
+        }
+        function closeAdsModal() {
+            document.getElementById('adsSimulatorModal').classList.add('hidden');
+        }
+        function updatePreview() {
+            document.getElementById('prevUrl').innerText = document.getElementById('simUrl').value || 'www.ddalgishop.com/';
+            document.getElementById('prevBrand').innerText = document.getElementById('simBrand').value || 'DDALGISHOP';
+            document.getElementById('prevTitle').innerText = document.getElementById('simTitle').value || '광고 제목을 입력해 주세요';
+            document.getElementById('prevDesc').innerText = document.getElementById('simDesc').value || '광고 설명을 입력해 주세요';
+        }
+
+        // 결과물 카드 클릭 토글 스크립트 (클릭 시 사각 박스 그림자 확대 + 아이콘 확대)
+        function toggleOutcomeCard(card) {
+            const isAlreadyActive = card.classList.contains('active');
+            document.querySelectorAll('.outcome-card').forEach(c => c.classList.remove('active'));
+            if (!isAlreadyActive) {
+                card.classList.add('active');
+            }
+        }
+    </script>
+
+</body>
+</html>
